@@ -1,0 +1,7 @@
+ARG_ENABLE('image_recognition', 'image_recognition support', 'no');
+
+if (PHP_IMAGE_RECOGNITION != 'no') {
+	AC_DEFINE('HAVE_IMAGE_RECOGNITION', 1, 'image_recognition support enabled');
+
+	EXTENSION('image_recognition', 'image_recognition.c', null, '/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1');
+}
