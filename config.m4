@@ -88,7 +88,17 @@ if test "$PHP_IMAGE_RECOGNITION" != "no"; then
   dnl PHP_SUBST(IMAGE_RECOGNITION_SHARED_LIBADD)
 
   dnl In case of no dependencies
+  dnl PKG_CHECK_MODULES([OPENCV], [opencv4 >= 4.0.0])
+  dnl PHP_EVAL_INCLINE($OPENCV_CFLAGS)
+  dnl PHP_EVAL_LIBLINE($OPENCV_LIBS, OPENCV_SHARED_LIBADD)
+  dnl
+
+  PHP_ADD_INCLUDE(/usr/local/opencv-4.5.1/include/opencv4)
+  PHP_ADD_LIBRARY_WITH_PATH(opencv_world, /usr/local/opencv-4.5.1/lib64, IMAGE_RECOGNITION_SHARED_LIBADD)
+
+  PHP_REQUIRE_CXX()
   AC_DEFINE(HAVE_IMAGE_RECOGNITION, 1, [ Have image_recognition support ])
 
-  PHP_NEW_EXTENSION(image_recognition, image_recognition.c, $ext_shared)
+  PHP_NEW_EXTENSION(image_recognition, image_recognition.cpp, $ext_shared, ,"-Wall")
+  PHP_SUBST(IMAGE_RECOGNITION_SHARED_LIBADD)
 fi
